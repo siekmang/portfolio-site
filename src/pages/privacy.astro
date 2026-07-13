@@ -30,7 +30,7 @@ const homeHref = base;
   </p>
 
   <p class="mb-8">
-    If you engage with the dark mode switch, the site will use local storage to store your preference and your first click of the switch on your device. This allows your theme preference to persist every time you return to the site. The switch click data is stored to prevent the site from serving the privacy pop up after you've already seen it once. As this is local storage, I can't(therefore don't) collect any information from this. If you wish to remove this after interacting with the switch, click here. By default, the website attempts to set the theme based on your system theme preferences.
+    If you engage with the dark mode switch, the site will use local storage to store your preference. This allows your theme preference to persist every time you return to the site. As this is local storage, I can't(therefore don't) collect any information from this. If you wish to remove this after interacting with the switch, <a href="#" id="lsWipe" role="button">click here</a>. By default, the website is on dark mode.
   </p>
 
   <p class="mb-8">
@@ -40,5 +40,25 @@ const homeHref = base;
   <p class="mb-8">
     In short, some things get saved to your device's local storage, but nowhere else.
   </p>
+  <script is:inline>
+    (function () {
+      document.addEventListener('DOMContentLoaded', function () {
+        function storageWipe(event) {
+          event.preventDefault();
+          if (localStorage.getItem('theme') || localStorage.getItem('clickHist')) {
+            localStorage.removeItem('theme');
+            localStorage.removeItem('clickHist');
+            alert('Local storage history cleared.');
+          } else {
+            alert('No theme or click history data in Local Storage.');
+          }
+        }
+
+        const el = document.querySelector('#lsWipe');
+        if (el) el.addEventListener('click', storageWipe, false);
+      });
+    })();
+  </script>
+
   <Footer></Footer>
 </Layout>

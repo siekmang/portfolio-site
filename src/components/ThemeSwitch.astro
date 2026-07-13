@@ -1,0 +1,61 @@
+---
+import { Icon } from 'astro-icon/components';
+---
+
+<button id="themeToggle" aria-pressed="false" aria-label="Toggle theme" title="Toggle theme" class="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-sm">
+  <span id="themeToggleLabel" class="sr-only">Toggle theme</span>
+  <span id="themeToggleMoon" class="hidden"><Icon name="ph:moon" class="h-5 w-5" /></span>
+  <span id="themeToggleSun" class="hidden"><Icon name="ph:sun" class="h-5 w-5" /></span>
+</button>
+
+<script is:inline>
+  (function () {
+    function getBaseTheme() {
+      const cur = document.documentElement.getAttribute('data-theme') || '';
+      const parts = cur.split('-');
+      return parts[0] || 'innovator';
+    }
+
+    function isDarkTheme(theme) {
+      return theme && theme.endsWith('-dark');
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const btn = document.getElementById('themeToggle');
+      const label = document.getElementById('themeToggleLabel');
+      const moonIcon = document.getElementById('themeToggleMoon');
+      const sunIcon = document.getElementById('themeToggleSun');
+      if (!btn || !label || !moonIcon || !sunIcon) return;
+
+      const base = getBaseTheme();
+      const dark = base + '-dark';
+      const light = base + '-light';
+
+      function updateButton(theme) {
+        const darkMode = isDarkTheme(theme);
+        const actionText = darkMode ? 'Switch to light theme' : 'Switch to dark theme';
+        btn.setAttribute('aria-pressed', String(!darkMode));
+        btn.setAttribute('aria-label', actionText);
+        btn.setAttribute('title', actionText);
+        label.textContent = actionText;
+        moonIcon.classList.toggle('hidden', !darkMode);
+        sunIcon.classList.toggle('hidden', darkMode);
+      }
+
+      // Initialize
+      const current = document.documentElement.getAttribute('data-theme') || localStorage.getItem('theme') || (base + '-dark');
+      updateButton(current);
+
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        const cur = document.documentElement.getAttribute('data-theme') || localStorage.getItem('theme') || dark;
+        const next = isDarkTheme(cur) ? light : dark;
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+        // record that user has interacted with the switch
+        try { localStorage.setItem('clickHist', '1'); } catch (err) {}
+        updateButton(next);
+      });
+    });
+  })();
+</script>

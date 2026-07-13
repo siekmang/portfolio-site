@@ -3,6 +3,7 @@ import '../styles/global.css';
 import { site } from '@data/site';
 import SideNav from '../components/SideNav.astro';
 import MobileHeader from '../components/MobileHeader.astro';
+import ThemeSwitch from '../components/ThemeSwitch.astro';
 import { ClientRouter } from 'astro:transitions';
 import { SITE_CONFIG } from '../config.ts';
 
@@ -44,11 +45,11 @@ const defaultTheme = `${baseTheme}-dark`;
     <script is:inline define:vars={{ baseTheme, defaultTheme }}>
       function applyTheme() {
         const savedTheme = localStorage.getItem('theme');
+        const themeToApply = savedTheme || defaultTheme;
 
-        if (savedTheme && savedTheme.startsWith(baseTheme)) {
-          document.documentElement.setAttribute('data-theme', savedTheme);
-        } else {
-          document.documentElement.setAttribute('data-theme', defaultTheme);
+        document.documentElement.setAttribute('data-theme', themeToApply);
+
+        if (!savedTheme) {
           localStorage.setItem('theme', defaultTheme);
         }
       }
@@ -69,8 +70,13 @@ const defaultTheme = `${baseTheme}-dark`;
         id="main"
         class="relative flex min-w-0 flex-1 flex-col px-4 pb-16 pt-12 sm:px-6 md:px-8 lg:py-15 lg:pl-4 lg:pr-0"
       >
-        <div class="mb-4 flex justify-end lg:absolute lg:right-8 lg:top-8 lg:z-10 xl:right-12">
-          <MobileHeader />
+        <div class="mb-4 flex flex-col items-center gap-4 lg:absolute lg:right-8 lg:top-8 lg:z-10 xl:right-12">
+          <div class="w-full flex justify-end lg:w-auto">
+            <ThemeSwitch />
+          </div>
+          <div class="w-full lg:hidden">
+            <MobileHeader />
+          </div>
         </div>
         <slot />
       </main>
