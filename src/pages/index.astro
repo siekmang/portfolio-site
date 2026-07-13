@@ -1,17 +1,22 @@
 ---
+import Layout from '../layouts/Layout.astro';
+import About from '../components/About.astro';
+import Footer from '../components/Footer.astro';
+import RecentPosts from '../components/RecentPosts.astro';
+import Experience from '../components/Experience.astro';
+import { site } from '../../data/site';
+import { posts } from '../../data/posts';
 
+// Display posts[0-2] as recent posts
+const recentPosts = posts.slice(0, 3);
+
+// Display posts[3-5] (or remaining) as archive rows
+const archiveRowPosts = posts.slice(3, 6);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title={site.meta.title} description={site.meta.description}>
+  <About />
+  <Experience />
+  <RecentPosts posts={recentPosts} archiveRowPosts={archiveRowPosts} />
+  <Footer />
+</Layout>

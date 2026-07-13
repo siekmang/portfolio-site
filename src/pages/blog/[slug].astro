@@ -1,0 +1,104 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Footer from '../../components/Footer.astro';
+import { site } from '@data/site';
+import { posts } from '@data/posts';
+import { Icon } from 'astro-icon/components';
+
+export function getStaticPaths() {
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+interface Props {
+  post: (typeof posts)[0];
+}
+
+const { post } = Astro.props;
+const title = `${post.title} | ${site.hero.name}`;
+const description = `${post.summary}`;
+const base = import.meta.env.BASE_URL.endsWith('/')
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+
+// Get adjacent posts for navigation
+const currentIndex = posts.findIndex((p) => p.slug === post.slug);
+const previousPost = currentIndex > 0 ? posts[currentIndex - 1] : null;
+const nextPost = currentIndex < posts.length - 1 ? posts[currentIndex + 1] : null;
+
+const imageSrc =
+  post.image ?
+    post.image.startsWith('/') ? post.image : `/${post.image}`
+    : undefined;
+---
+
+<Layout title={title} description={description}>
+  <div class="max-w-3xl mb-10">
+    <!-- Back to blog link -->
+    <p class="mb-8">
+      <a
+        href={`${base}blog`}
+        class="group flex items-center gap-2 text-sm text-accent transition hover:text-slate-light"
+        data-astro-prefetch
+      >
+        <Icon name="ph:arrow-left" class="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+        Back to Blog
+      </a>
+    </p>
+
+    <!-- Post header -->
+    <article class="space-y-8">
+      <header class="space-y-4">
+        <h1 class="text-4xl font-bold tracking-tight text-white sm:text-5xl">{post.title}</h1>
+        {post.date && <p class="font-mono text-sm text-accent">{post.date}</p>}
+      </header>
+
+      <!-- Post image -->
+      {imageSrc && (
+        <div class="w-full overflow-hidden rounded-xl">
+          <img
+            src={imageSrc}
+            alt={post.imageAlt ?? post.title}
+            class="w-full h-96 object-cover"
+            loading="eager"
+            decoding="async"
+          />
+        </div>
+      )}
+
+      <!-- Post content -->
+      <div class="prose prose-invert max-w-none">
+        <p class="body-copy whitespace-pre-wrap">{post.content}</p>
+      </div>
+    </article>
+
+    <!-- Post navigation -->
+    <nav class="mt-20 flex items-center justify-between border-t border-slate-700 pt-8">
+      {previousPost ?
+        <a
+          href={`${base}blog/${previousPost.slug}`}
+          class="group flex items-center gap-2 text-sm text-accent transition hover:text-slate-light"
+          data-astro-prefetch
+        >
+          <Icon name="ph:arrow-left" class="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+          <span class="group-hover:underline">{previousPost.title}</span>
+        </a>
+        : <div />
+      }
+      {nextPost ?
+        <a
+          href={`${base}blog/${nextPost.slug}`}
+          class="group flex items-center gap-2 text-sm text-accent transition hover:text-slate-light"
+          data-astro-prefetch
+        >
+          <span class="group-hover:underline">{nextPost.title}</span>
+          <Icon name="ph:arrow-right" class="h-4 w-4 transition-transform group-hover:translate-x-1" />
+        </a>
+        : <div />
+      }
+    </nav>
+  </div>
+  <Footer></Footer>
+</Layout>

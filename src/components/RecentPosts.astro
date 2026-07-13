@@ -1,0 +1,49 @@
+---
+import type { Post } from '../../data/posts';
+import BlogCard from './BlogCard.astro';
+import ArchiveRow from './ArchiveRow.astro';
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+  posts: readonly Post[];
+  archiveRowPosts?: readonly Post[];
+}
+
+const { posts, archiveRowPosts } = Astro.props;
+const base = import.meta.env.BASE_URL.endsWith('/')
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+const archiveHref = `${base}blog`;
+---
+
+<section
+  id="blog"
+  class="mb-20 scroll-mt-24 lg:mb-14 lg:scroll-mt-8"
+  aria-labelledby="blog-heading"
+>
+  <h2 id="blog-heading" class="section-heading">Blog</h2>
+  <div class="space-y-8">
+    {posts.map((post) => (
+      <BlogCard post={post} imageSrc={post.image ? `${base}${post.image}` : undefined} />
+    ))}
+  </div>
+
+  {archiveRowPosts && archiveRowPosts.length > 0 && (
+    <div class="mt-10">
+      <ArchiveRow posts={archiveRowPosts} />
+    </div>
+  )}
+
+  {posts.length > 0 && (
+	  <p class="mt-7 mb-7">
+	    <a
+	      href={archiveHref}
+	      class="group flex items-center gap-2 text-sm text-accent transition hover:text-slate-light"
+	      data-astro-prefetch
+	    >
+	      View Full Blog Archive
+	      <Icon name="ph:arrow-right" class="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+	    </a>
+	  </p>
+  )}
+</section>

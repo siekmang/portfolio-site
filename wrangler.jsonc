@@ -1,7 +1,7 @@
 {
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"compatibility_date": "2026-06-25",
-	"compatibility_flags": ["global_fetch_strictly_public"],
+	"compatibility_flags": ["nodejs_compat"],
 	"name": "portfolio-site",
 	"main": "@astrojs/cloudflare/entrypoints/server",
 	"assets": {
@@ -10,5 +10,8 @@
 	},
 	"observability": {
 		"enabled": true
-	}
+	},
+  "kv_namespaces": [
+    { "binding": "SESSION", "id": "placeholder-for-local-dev" }
+  ]
 }

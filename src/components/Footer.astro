@@ -1,0 +1,32 @@
+---
+const year = new Date().getFullYear();
+const base = import.meta.env.BASE_URL.endsWith('/')
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+---
+
+<footer class="mt-auto bg-background">
+  <p class="text-sm text-footer-muted mb-3">
+    <a
+    href=`${base}privacy`
+    rel="noopener noreferrer"
+    class="text-slate-light transition hover:text-slate-lightest"
+    >
+      Privacy Policy
+    </a>
+  </p>
+  <p class="text-sm text-footer-muted">
+    {year} · Built with{' '}
+    <a
+      href="https://astro.build"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="text-slate-light transition hover:text-slate-lightest"
+    >
+      Astro
+    </a>
+    {' '}· Based on Masoud Soleymani's <a href="https://github.com/masoudsoleymani/projects-portfolio-template" target="_blank"
+    rel="noopener noreferrer"
+    class="text-slate-light transition hover:text-slate-lightest">projects-portfolio-template</a>
+  </p>
+</footer>
