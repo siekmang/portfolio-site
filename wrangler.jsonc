@@ -2,12 +2,7 @@
   "$schema": "./node_modules/wrangler/config-schema.json",
   "pages_build_output_dir": "./dist",
   "compatibility_date": "2026-06-25",
-  "compatibility_flags": ["nodejs_compat"],
   "name": "portfolio-site",
-  "assets": {
-    "directory": "./dist",
-    "binding": "ASSETS",
-  },
   "observability": {
     "enabled": true,
   },
