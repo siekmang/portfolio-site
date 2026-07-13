@@ -6,6 +6,11 @@ export default defineConfig({
   output: "static",
   vite: {
     plugins: [tailwindcss()],
+    build: {
+      rollupOptions: {
+        input: undefined,
+      },
+    },
   },
   integrations: [
     icon({

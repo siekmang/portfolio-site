@@ -1,17 +1,14 @@
 {
-	"$schema": "./node_modules/wrangler/config-schema.json",
-	"compatibility_date": "2026-06-25",
-	"compatibility_flags": ["nodejs_compat"],
-	"name": "portfolio-site",
-	"main": "@astrojs/cloudflare/entrypoints/server",
-	"assets": {
-		"directory": "./dist",
-		"binding": "ASSETS"
-	},
-	"observability": {
-		"enabled": true
-	},
-  "kv_namespaces": [
-    { "binding": "SESSION", "id": "placeholder-for-local-dev" }
-  ]
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "compatibility_date": "2026-06-25",
+  "compatibility_flags": ["nodejs_compat"],
+  "name": "portfolio-site",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+  },
+  "observability": {
+    "enabled": true,
+  },
+  "kv_namespaces": [{ "binding": "SESSION", "id": "placeholder-for-local-dev" }],
 }

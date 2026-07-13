@@ -17,9 +17,6 @@
   "author": "Greg Siekman",
   "license": "MIT",
   "description": "Developer Website",
-  "overrides": {
-    "vite": "^7"
-  },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
     "@eslint/js": "^9.39.2",
