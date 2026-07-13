@@ -20,12 +20,13 @@ import { Icon } from 'astro-icon/components';
       return theme && theme.endsWith('-dark');
     }
 
-    document.addEventListener('DOMContentLoaded', function () {
+    function initThemeToggle() {
       const btn = document.getElementById('themeToggle');
       const label = document.getElementById('themeToggleLabel');
       const moonIcon = document.getElementById('themeToggleMoon');
       const sunIcon = document.getElementById('themeToggleSun');
       if (!btn || !label || !moonIcon || !sunIcon) return;
+      if (btn.dataset.themeSwitchInitialized === 'true') return;
 
       const base = getBaseTheme();
       const dark = base + '-dark';
@@ -42,7 +43,6 @@ import { Icon } from 'astro-icon/components';
         sunIcon.classList.toggle('hidden', darkMode);
       }
 
-      // Initialize
       const current = document.documentElement.getAttribute('data-theme') || localStorage.getItem('theme') || (base + '-dark');
       updateButton(current);
 
@@ -52,10 +52,14 @@ import { Icon } from 'astro-icon/components';
         const next = isDarkTheme(cur) ? light : dark;
         document.documentElement.setAttribute('data-theme', next);
         localStorage.setItem('theme', next);
-        // record that user has interacted with the switch
         try { localStorage.setItem('clickHist', '1'); } catch (err) {}
         updateButton(next);
       });
-    });
+
+      btn.dataset.themeSwitchInitialized = 'true';
+    }
+
+    initThemeToggle();
+    document.addEventListener('astro:page-load', initThemeToggle);
   })();
 </script>
