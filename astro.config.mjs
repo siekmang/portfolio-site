@@ -4,6 +4,7 @@ import icon from "astro-icon";
 
 export default defineConfig({
   output: "static",
+  site: "https://siekmang.dev",
   vite: {
     plugins: [tailwindcss()],
     build: {
