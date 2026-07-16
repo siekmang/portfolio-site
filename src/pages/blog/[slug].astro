@@ -70,7 +70,7 @@ const imageSrc =
 
       <!-- Post content -->
       <div class="prose prose-invert max-w-none">
-        <p class="body-copy whitespace-pre-wrap">{post.content}</p>
+        <div set:html={post.content} class="body-copy whitespace-pre-wrap"></div>
       </div>
     </article>
 

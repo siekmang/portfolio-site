@@ -13,6 +13,7 @@ const base = import.meta.env.BASE_URL.endsWith('/')
 const postHref = `${base}blog/${post.slug}`;
 
 const imageSrc = imageOverride ?? (post.image ? (post.image.startsWith('/') ? post.image : `/${post.image}`) : undefined);
+const cleanContent = post.content.replace(/<[^>]*>/g, '');
 ---
 
 <a href={postHref} class="scroll-stat panel-card group space-y-6 block hover:opacity-80 transition-opacity">
@@ -37,7 +38,7 @@ const imageSrc = imageOverride ?? (post.image ? (post.image.startsWith('/') ? po
     )}
 
     <div class="space-y-4">
-      <p class="body-copy line-clamp-3">{post.content}</p>
+      <p class="body-copy line-clamp-3">{cleanContent}</p>
     </div>
   </article>
 </a>
