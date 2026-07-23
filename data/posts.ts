@@ -20,6 +20,19 @@ export interface Post {
 
 export const posts: Post[] = [
 	{
+		slug: 'sprint-summary',
+		title: 'Automating Sprint Summary Reports',
+		date: '2026-07-23',
+		summary: 'Reflecting on a python sprint summary tool I built.',
+		content: `<p>For a few months, I was tasked with leading the sprint process on our team. This including running our debrief and planning meetings, and developing a summary write-up of what happened in the previous sprint for leadership on other teams. Despite leading the meetings, I wasn't always as sharply abreast on the specific details of what people were working on, which made it a bit tough to write the sprint summary from memory.</p>
+		<p>Every two weeks, I could've opened up our Trello board and scrolled through cards and lists to write up this summary. That felt slow and tedious to me. So, I opened up me IDE and built a Python script that automated a little bit of this work. Using the Trello API, I pulled cards from the relevant lists in our board. The script dumped the cards into a csv, generated a data file, and created a template markdown file to draft into.</p>
+		<p>The data file is my favorite part of the project. It attempts to establish keywords from the sprint by counting words from the titles and descriptions of cards. For example, one of the data files has a keyword "Field." It was in five cards, and then below the keyword, it lists the titles of each card. This section used a rudimentary filter list to filter out common words that weren't useful descriptions of the work being done(people's names.) It also attempts to use a frequency filter to determine relevancy. A word that is in 9 cards, for example, is assumed to be a common word and not a descriptive word of the work being done. The data sheet does this for completed items, and then in a separate list for active and planned items.</p>
+		<p>At the bottom of the data file is then a 'Quick Scan Index' of the cards, which is just the card titles in a text list corresponding with the lists in Trello.</p>
+		<p>With those files on hand, I was able to write the sprint summaries faster. I could use keywords to prompt what we got done and what we planned to get done. I could scan the cards to catch anything I missed. Once I was done drafting, I could run a formatter script that converted the markdown file into HTML; as that was a friendlier format for Outlook, and copied it to my clipboard.</p>
+		<p>If I were going to pick this project up again, I would put more work into that formatter script. Outlook was a little fidgety with it's formatting preferences, and I always had to spend some time formatting it manually. I could also do more work on how it determines what a keyword is and surfacing relevant information from the cards.</p>`,
+		tags: ['tooling']
+	},
+	{
 		slug: 'astro-port',
 		title: 'Porting my Personal Website from Astro',
 		date: '2026-07-16',
@@ -33,7 +46,7 @@ export const posts: Post[] = [
 		<p>In the Astro build of the site, that kept turning up blank. After a little bit of troubleshooting, I figured out that it was easier to just peel away any back-slashes and just leave the slug using removeAll. That got the header generator working. At that point, I merged the astro code into main, and Cloudflare Pages built and shipped it.</p>
 		<p>As a side note, I really gained an appreciation for Cloudflare Pages in the process. It's integration with GitHub is so effortless and it built every push in a preview environment, which helped increase my confidence that what I was going to eventually ship to main was going to work. Another tip: astro dev is great for visual changes on your site, but I got tricked a few times by things not working in that environment. astro build and astro preview swooped in to save the day on that.</p>
 		<p>I still plan to move toward components and layouts for that site eventually, as well as replacing my bloated css with Tailwind, but having the performance upgrades from the jump with Astro was a really nice quality of life upgrade for my site.</p>`,
-		tags: ["web"]
+		tags: ['web']
 	}
 ];
 
