@@ -72,6 +72,18 @@ const imageSrc =
       <div class="prose prose-invert max-w-none">
         <div set:html={post.content} class="body-copy whitespace-pre-wrap"></div>
       </div>
+
+      <div class="mt-3 flex flex-wrap gap-2">
+        <section class="tag-cloud rounded-full border border-accent/30 bg-accent/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+            <ul>
+              {post.tags?.map((tag) => (
+                <li>
+                  <a href={`/tags/${tag}`}>#{tag}</a>
+                </li>
+              ))}
+            </ul>
+          </section>
+      </div>
     </article>
 
     <!-- Post navigation -->

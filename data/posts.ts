@@ -14,7 +14,8 @@ export interface Post {
 	summary: string;
   image?: string;
   imageAlt?: string;
-  content: string;
+	content: string;
+  tags?: string[];
 }
 
 export const posts: Post[] = [
@@ -32,5 +33,18 @@ export const posts: Post[] = [
 		<p>In the Astro build of the site, that kept turning up blank. After a little bit of troubleshooting, I figured out that it was easier to just peel away any back-slashes and just leave the slug using removeAll. That got the header generator working. At that point, I merged the astro code into main, and Cloudflare Pages built and shipped it.</p>
 		<p>As a side note, I really gained an appreciation for Cloudflare Pages in the process. It's integration with GitHub is so effortless and it built every push in a preview environment, which helped increase my confidence that what I was going to eventually ship to main was going to work. Another tip: astro dev is great for visual changes on your site, but I got tricked a few times by things not working in that environment. astro build and astro preview swooped in to save the day on that.</p>
 		<p>I still plan to move toward components and layouts for that site eventually, as well as replacing my bloated css with Tailwind, but having the performance upgrades from the jump with Astro was a really nice quality of life upgrade for my site.</p>`,
+		tags: ["web"]
 	}
 ];
+
+export function getAllTags(): string[] {
+	const allTags = posts.flatMap((post) => post.tags ?? []);
+	const uniqueTags = [...new Set(allTags.map((tag) => tag.toLowerCase()))];
+	return uniqueTags.sort();
+}
+
+export function getPostsByTag(tag: string): Post[] {
+	return posts.filter((post) =>
+		post.tags?.some((t) => t.toLowerCase() === tag.toLowerCase())
+	);
+}

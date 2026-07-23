@@ -9,7 +9,6 @@ const { posts } = Astro.props;
 const base = import.meta.env.BASE_URL.endsWith('/')
   ? import.meta.env.BASE_URL
   : `${import.meta.env.BASE_URL}/`;
-const cleanContent = post.content.replace(/<[^>]*>/g, '');
 ---
 
 <section
@@ -49,7 +48,7 @@ const cleanContent = post.content.replace(/<[^>]*>/g, '');
                   <span class="font-medium title-text transition-colors group-hover:text-accent">{post.title}</span>
                 </td>
                 <td class="px-4 py-4 text-slate text-sm line-clamp-2">
-                  <p class="m-0">{cleanContent}</p>
+                  <p class="m-0">{post.content.replace(/<[^>]*>/g, '')}</p>
                 </td>
               </tr>
             ))

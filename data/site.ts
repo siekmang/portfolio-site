@@ -78,7 +78,6 @@ export const site = {
       tech: ['Ticketing', 'Jamf', 'macOS', 'Clever'],
     },
   ],
-  // TODO Unsure about this, need to change info even if it's right.
   blogArchivePage: {
     title: 'Blog',
     description: `A collection of thoughts about work I've done.`,
